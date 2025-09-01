@@ -7,53 +7,100 @@ screen.bgcolor("white")
 screen.title("Pookalam Blueprint")
 
 t = turtle.Turtle()
-t.speed(0)
+t.speed(10)
 t.pensize(2)
 
-# Function to draw a circle
+# Function to draw a circle at center
 def draw_circle(radius):
     t.penup()
-    t.sety(-radius)  # move turtle to bottom
+    t.goto(0, -radius)   # Move to bottom of circle
     t.pendown()
     t.circle(radius)
 
-# Function to draw petals
-def draw_petals(radius, n_petals, petal_length):
+# Function to draw semicircles fitted around the central circle
+def draw_semicircles(center_radius, n_petals, petal_radius):
     angle = 360 / n_petals
-    for _ in range(n_petals):
+    for i in range(n_petals):
+        theta = math.radians(i * angle)
+        # center of semicircle lies on central circle
+        x = center_radius * math.cos(theta)
+        y = center_radius * math.sin(theta)
+
         t.penup()
-        t.goto(0,0)
-        t.forward(radius)
+        t.goto(x, y)
+        t.setheading(i * angle - 90)  # orient mouth inward
+        t.forward(petal_radius)       # move to edge
         t.pendown()
-        t.setheading(t.towards(0,0))
-        t.left(90)
-        
-        # Petal shape
-        t.circle(petal_length, 60)
-        t.left(120)
-        t.circle(petal_length, 60)
-        t.left(180 - angle)
+        t.circle(petal_radius, 180)   # semicircle outward
 
-# Draw blueprint
-t.color("brown")  # outline color
+# -------------------
+# Draw Pookalam Base
+# -------------------
 
-# Inner circle
-draw_circle(50)
+# Central circle
+inner_radius = 50
+draw_circle(inner_radius)
 
-# First layer of petals
-draw_petals(50, 8, 50)
+# Semicircles around it
+petal_radius = 30
+draw_semicircles(inner_radius, 12, petal_radius)
 
-# Second circle
-draw_circle(120)
+# Correct outer circle (envelops everything)
+outer_radius = inner_radius + 2 * petal_radius
+draw_circle(outer_radius)
 
-# Second layer of petals
-draw_petals(120, 12, 80)
+t.hideturtle()
+screen.mainloop()
+import turtle
+import math
 
-# Third circle
-draw_circle(200)
+# Setup screen
+screen = turtle.Screen()
+screen.bgcolor("white")
+screen.title("Pookalam Blueprint")
 
-# Third layer of petals
-draw_petals(200, 16, 100)
+t = turtle.Turtle()
+t.speed(10)
+t.pensize(2)
+
+# Function to draw a circle at center
+def draw_circle(radius):
+    t.penup()
+    t.goto(0, -radius)   # Move to bottom of circle
+    t.pendown()
+    t.circle(radius)
+
+# Function to draw semicircles fitted around the central circle
+def draw_semicircles(center_radius, n_petals, petal_radius):
+    angle = 360 / n_petals
+    for i in range(n_petals):
+        theta = math.radians(i * angle)
+        # center of semicircle lies on central circle
+        x = center_radius * math.cos(theta)
+        y = center_radius * math.sin(theta)
+
+        t.penup()
+        t.goto(x, y)
+        t.setheading(i * angle - 90)  # orient mouth inward
+        t.forward(petal_radius)       # move to edge
+        t.pendown()
+        t.circle(petal_radius, 180)   # semicircle outward
+
+# -------------------
+# Draw Pookalam Base
+# -------------------
+
+# Central circle
+inner_radius = 50
+draw_circle(inner_radius)
+
+# Semicircles around it
+petal_radius = 30
+draw_semicircles(inner_radius, 12, petal_radius)
+
+# Correct outer circle (envelops everything)
+outer_radius = inner_radius + 2 * petal_radius
+draw_circle(outer_radius)
 
 t.hideturtle()
 screen.mainloop()
