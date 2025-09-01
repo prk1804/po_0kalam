@@ -1,106 +1,74 @@
-import turtle
-import math
+import turtle             
+my_window = turtle.Screen() 
+my_window.bgcolor("cornsilk")
+       # creates a graphics window
+my_pen = turtle.Turtle()
+my_pen.speed(5)      
+my_pen.up()
+my_pen.goto(0,-250)
+my_pen.down()
+my_pen.color('darkgreen')
+my_pen.begin_fill()
+my_pen.circle(250)
+my_pen.end_fill()
 
-# Setup screen
-screen = turtle.Screen()
-screen.bgcolor("white")
-screen.title("Pookalam Blueprint")
+my_pen.goto(0,-220)
+my_pen.color('yellow')
+my_pen.begin_fill()
+my_pen.circle(220)
+my_pen.end_fill()
+side=8
+length=50
+angle=360/8
+my_pen.goto(0,0)
 
-t = turtle.Turtle()
-t.speed(10)
-t.pensize(2)
+for j in range(8):
+ my_pen.begin_fill()  
+ my_pen.right(360/8)
+ my_pen.color('orangered')
+ for i in range(side):
+    my_pen.forward(length)
+    my_pen.left(angle)
+ my_pen.end_fill()
 
-# Function to draw a circle at center
-def draw_circle(radius):
-    t.penup()
-    t.goto(0, -radius)   # Move to bottom of circle
-    t.pendown()
-    t.circle(radius)
+for j in range(8):
+ my_pen.begin_fill()  
+ my_pen.right(360/8)
+ my_pen.color('orange')
+ for i in range(side):
+    my_pen.forward(30)
+    my_pen.left(angle)
+ my_pen.end_fill()
 
-# Function to draw semicircles fitted around the central circle
-def draw_semicircles(center_radius, n_petals, petal_radius):
-    angle = 360 / n_petals
-    for i in range(n_petals):
-        theta = math.radians(i * angle)
-        # center of semicircle lies on central circle
-        x = center_radius * math.cos(theta)
-        y = center_radius * math.sin(theta)
 
-        t.penup()
-        t.goto(x, y)
-        t.setheading(i * angle - 90)  # orient mouth inward
-        t.forward(petal_radius)       # move to edge
-        t.pendown()
-        t.circle(petal_radius, 180)   # semicircle outward
 
-# -------------------
-# Draw Pookalam Base
-# -------------------
+my_pen.up()
+my_pen.left(90)
+my_pen.forward(120)
+my_pen.left(90)
+my_pen.forward(50)
+my_pen.left(360/8)
+my_pen.down()
+my_pen.color('darkmagenta')
 
-# Central circle
-inner_radius = 50
-draw_circle(inner_radius)
+# Draw first semicircle
+my_pen.begin_fill()
+my_pen.circle(50, 180)  # radius=50, extent=180 for semicircle
+my_pen.end_fill()
 
-# Semicircles around it
-petal_radius = 30
-draw_semicircles(inner_radius, 12, petal_radius)
+# Draw 6 more semicircles around
+for i in range(6):
+    my_pen.begin_fill()
+    my_pen.left(360/7)  # adjust rotation to spread evenly
+    my_pen.circle(50, 180)
+    my_pen.end_fill()
 
-# Correct outer circle (envelops everything)
-outer_radius = inner_radius + 2 * petal_radius
-draw_circle(outer_radius)
-
-t.hideturtle()
-screen.mainloop()
-import turtle
-import math
-
-# Setup screen
-screen = turtle.Screen()
-screen.bgcolor("white")
-screen.title("Pookalam Blueprint")
-
-t = turtle.Turtle()
-t.speed(10)
-t.pensize(2)
-
-# Function to draw a circle at center
-def draw_circle(radius):
-    t.penup()
-    t.goto(0, -radius)   # Move to bottom of circle
-    t.pendown()
-    t.circle(radius)
-
-# Function to draw semicircles fitted around the central circle
-def draw_semicircles(center_radius, n_petals, petal_radius):
-    angle = 360 / n_petals
-    for i in range(n_petals):
-        theta = math.radians(i * angle)
-        # center of semicircle lies on central circle
-        x = center_radius * math.cos(theta)
-        y = center_radius * math.sin(theta)
-
-        t.penup()
-        t.goto(x, y)
-        t.setheading(i * angle - 90)  # orient mouth inward
-        t.forward(petal_radius)       # move to edge
-        t.pendown()
-        t.circle(petal_radius, 180)   # semicircle outward
-
-# -------------------
-# Draw Pookalam Base
-# -------------------
-
-# Central circle
-inner_radius = 50
-draw_circle(inner_radius)
-
-# Semicircles around it
-petal_radius = 30
-draw_semicircles(inner_radius, 12, petal_radius)
-
-# Correct outer circle (envelops everything)
-outer_radius = inner_radius + 2 * petal_radius
-draw_circle(outer_radius)
-
-t.hideturtle()
-screen.mainloop()
+my_pen.up()
+my_pen.goto(0,0)
+my_pen.down()
+my_pen.left(60)
+print ;my_pen.xcor()
+print ;my_pen.ycor()
+my_pen.color('white')
+my_pen.shape('circle')
+turtle.exitonclick()
