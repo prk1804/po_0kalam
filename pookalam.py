@@ -11,11 +11,12 @@ def draw_ring(ax, r1, r2, color, points=500):
             color=color)
 
 # Function to draw star polygons
-def draw_star(ax, r, n_points, color):
-    theta = np.linspace(0, 2*np.pi, n_points*2+1)
-    r_values = np.tile([r, r/2], n_points+1)
+def draw_star(ax, r, n_points, base_color):
+    theta = np.linspace(0, 2*np.pi, n_points*2, endpoint=False)
+    r_values = np.tile([r, r/2], n_points)  # same length as theta
     x, y = r_values * np.cos(theta), r_values * np.sin(theta)
-    ax.fill(x, y, color=color)
+    ax.fill(x, y, color=base_color, edgecolor=base_color)
+
 
 # Function to draw zigzag ring
 def draw_zigzag(ax, r1, r2, n_zigs, color):
