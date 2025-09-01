@@ -1,51 +1,59 @@
-import matplotlib.pyplot as plt
-import numpy as np
+import turtle
+import math
 
-# Function to draw a filled ring (annulus section)
-def draw_ring(ax, r1, r2, color, points=500):
-    theta = np.linspace(0, 2*np.pi, points)
-    x1, y1 = r1*np.cos(theta), r1*np.sin(theta)
-    x2, y2 = r2*np.cos(theta), r2*np.sin(theta)
-    ax.fill(np.concatenate([x1, x2[::-1]]),
-            np.concatenate([y1, y2[::-1]]),
-            color=color)
+# Setup screen
+screen = turtle.Screen()
+screen.bgcolor("white")
+screen.title("Pookalam Blueprint")
 
-# Function to draw star polygons
-def draw_star(ax, r, n_points, base_color):
-    theta = np.linspace(0, 2*np.pi, n_points*2, endpoint=False)
-    r_values = np.tile([r, r/2], n_points)  # same length as theta
-    x, y = r_values * np.cos(theta), r_values * np.sin(theta)
-    ax.fill(x, y, color=base_color, edgecolor=base_color)
+t = turtle.Turtle()
+t.speed(0)
+t.pensize(2)
 
+# Function to draw a circle
+def draw_circle(radius):
+    t.penup()
+    t.sety(-radius)  # move turtle to bottom
+    t.pendown()
+    t.circle(radius)
 
-# Function to draw zigzag ring
-def draw_zigzag(ax, r1, r2, n_zigs, color):
-    theta = np.linspace(0, 2*np.pi, n_zigs*2+1)
-    r_values = np.tile([r1, r2], n_zigs+1)
-    x, y = r_values * np.cos(theta), r_values * np.sin(theta)
-    ax.fill(x, y, color=color)
+# Function to draw petals
+def draw_petals(radius, n_petals, petal_length):
+    angle = 360 / n_petals
+    for _ in range(n_petals):
+        t.penup()
+        t.goto(0,0)
+        t.forward(radius)
+        t.pendown()
+        t.setheading(t.towards(0,0))
+        t.left(90)
+        
+        # Petal shape
+        t.circle(petal_length, 60)
+        t.left(120)
+        t.circle(petal_length, 60)
+        t.left(180 - angle)
 
-# Main figure
-fig, ax = plt.subplots(figsize=(8,8))
-ax.set_aspect("equal")
-ax.axis("off")
+# Draw blueprint
+t.color("brown")  # outline color
 
-# Colors inspired by your Pookalam
-colors = {
-    "yellow": "#FFD700",
-    "orange": "#FF8C00",
-    "red": "#8B0000",
-    "white": "#FFFFFF",
-    "green": "#006400"
-}
+# Inner circle
+draw_circle(50)
 
-# Draw concentric layers
-draw_star(ax, 0.3, 8, colors["yellow"])      # Center star
-draw_ring(ax, 0.3, 0.5, colors["green"])     # Green ring
-draw_zigzag(ax, 0.5, 0.7, 12, colors["white"]) # White zigzag
-draw_ring(ax, 0.7, 0.9, colors["orange"])    # Orange ring
-draw_ring(ax, 0.9, 1.1, colors["red"])       # Red ring
-draw_ring(ax, 1.1, 1.3, colors["yellow"])    # Yellow ring
-draw_ring(ax, 1.3, 1.5, colors["green"])     # Outer green ring
+# First layer of petals
+draw_petals(50, 8, 50)
 
-plt.show()
+# Second circle
+draw_circle(120)
+
+# Second layer of petals
+draw_petals(120, 12, 80)
+
+# Third circle
+draw_circle(200)
+
+# Third layer of petals
+draw_petals(200, 16, 100)
+
+t.hideturtle()
+screen.mainloop()
